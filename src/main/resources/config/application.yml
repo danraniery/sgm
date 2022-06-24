@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: sgm
+  jpa:
+    hibernate.ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: MYSQL
+    show-sql: true
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+  jackson:
+    deserialization:
+      read-date-timestamps-as-nanoseconds: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+application:
+  jwt:
+    secretKey: R5-_tqG=pS!zX?cS7PpY24a{vY'{5D%N
+    tokenPrefix: 'Bearer '
+    accessTokenExpirationInMinutes: 15
+    refreshTokenExpirationInMinutes: 1440
+    base64Secret: ZTY3NTY5NzgxOWFkM2RiNzRjMDUwYTFiMGMxNGM3ZmY3NGU2OTdkMzgwZGJkZTlhMzFlMjIwMzFiMGNmYTk4NTM2NjkzZmE4MTcyMzNiNDZhMmEyYjA5NzdhM2M4MjA3ODUyZjIxZGIyZWZjYzBlMWRkMzZmMmJhNmI3OTk4ODc=
+
+info:
+  clientApp:
+    name: 'Sistema de Gestão Integrada Municipal'
+
+password-rules:
+  regex:
+    number: (?=.*[0-9])
+    uppercase: (?=.*[A-Z])
+    lowercase: (?=.*[a-z])
+    non-alphabetic: (?=.*[^a-zA-Z0-9])
+  logon-attempts: 5
+  history-limit: 10
