@@ -126,9 +126,9 @@ public class UserService implements IAccountDao {
         Page<User> usersPage;
 
         if (!Strings.isNullOrEmpty(search)) {
-            usersPage = userRepository.findAllByNameContainingIgnoreCase(search, pageable);
+            usersPage = userRepository.findAllByNameContainingIgnoreCaseAndSuperUserIsFalse(search, pageable);
         } else {
-            usersPage = userRepository.findAll(pageable);
+            usersPage = userRepository.findAllBySuperUserIsFalse(pageable);
         }
 
         log.debug("Returning users sorted by '{}' | searched by '{}': {}", pageable.getSort(), search, usersPage.getContent());
