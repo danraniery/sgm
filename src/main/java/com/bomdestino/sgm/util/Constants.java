@@ -36,6 +36,7 @@ public final class Constants {
     public static final String SYSTEM_ADMIN_USERNAME = "system.admin";
     public static final String SYSTEM_ADMIN_FIRST_NAME = "Administrador";
     public static final String SYSTEM_ADMIN_LANGUAGE = "pt-br";
+    public static final int USER_PASSWORD_MIN_LENGTH = 7;
 
     /**
      * Fields
@@ -50,6 +51,8 @@ public final class Constants {
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String ROLES = "ROLES";
     public static final String IS_ONLY_READ = "IS_ONLY_READ";
+    public static final String IS_RURAL_PRODUCER = "IS_RURAL_PRODUCER";
+    public static final String TYPE = "TYPE";
     public static final String USERNAME = "USERNAME";
     public static final String PASSWORD_HASH = "PASSWORD_HASH";
     public static final String PROFILE_ID = "PROFILE_ID";

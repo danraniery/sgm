@@ -3,6 +3,7 @@ package com.bomdestino.sgm.util;
 import com.bomdestino.sgm.config.security.auth.SGMRole;
 import com.bomdestino.sgm.domain.Profile;
 import com.bomdestino.sgm.domain.User;
+import com.bomdestino.sgm.domain.enums.UserType;
 import com.bomdestino.sgm.repository.ProfileRepository;
 import com.bomdestino.sgm.repository.UserRepository;
 import com.google.common.collect.Sets;
@@ -18,7 +19,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import static com.bomdestino.sgm.util.Constants.*;
+import static com.bomdestino.sgm.util.Constants.SYSTEM_ADMIN_FIRST_NAME;
+import static com.bomdestino.sgm.util.Constants.SYSTEM_ADMIN_USERNAME;
 import static com.bomdestino.sgm.util.TranslateConstants.DESCRIPTION_KEY;
 import static com.bomdestino.sgm.util.TranslateConstants.SUPER_ADMIN_PROFILE;
 
@@ -104,6 +106,7 @@ public class DBLoadService {
                 .superUser(true)
                 .blocked(false)
                 .activated(true)
+                .type(UserType.LEGAL_ENTITY)
                 .build();
 
         users.add(systemUser);

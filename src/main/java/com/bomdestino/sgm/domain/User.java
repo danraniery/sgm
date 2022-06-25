@@ -1,5 +1,6 @@
 package com.bomdestino.sgm.domain;
 
+import com.bomdestino.sgm.domain.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -87,5 +88,15 @@ public class User extends AbstractEntity implements Serializable {
     @NotNull
     @Column(name = IS_BLOCKED, nullable = false)
     private boolean blocked = false;
+
+    @Builder.Default
+    @NotNull
+    @Column(name = IS_RURAL_PRODUCER, nullable = false)
+    private boolean ruralProducer = false;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = TYPE, nullable = false)
+    private UserType type;
 
 }
