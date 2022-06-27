@@ -3,6 +3,7 @@ package com.bomdestino.sgm.config.security.jwt;
 import com.bomdestino.sgm.config.security.auth.SGMUserDetailsService;
 import com.bomdestino.sgm.domain.User;
 import com.bomdestino.sgm.exception.exceptions.ExpiredCredentialsException;
+import com.bomdestino.sgm.exception.exceptions.NotFoundException;
 import com.bomdestino.sgm.exception.exceptions.UserNotActivatedException;
 import com.bomdestino.sgm.service.UserService;
 import com.bomdestino.sgm.util.Translator;
