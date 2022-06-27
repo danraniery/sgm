@@ -29,6 +29,8 @@ public final class Constants {
      */
     public static final String PROFILE = "PROFILE";
     public static final String USER = "USER";
+    public static final String SERVICE = "SGMSERVICE";
+    public static final String AREA = "AREA";
 
     /**
      * User
@@ -37,6 +39,29 @@ public final class Constants {
     public static final String SYSTEM_ADMIN_FIRST_NAME = "Administrador";
     public static final String SYSTEM_ADMIN_LANGUAGE = "pt-br";
     public static final int USER_PASSWORD_MIN_LENGTH = 7;
+
+    /**
+     * Area
+     */
+    public static final String CITIZEN_AREA = "Cidadão";
+    public static final String HEALTH_AREA = "Saúde";
+
+    /**
+     * Services
+     */
+    public static final String CHANGE_PASSWORD_SERVICE = "Atualizar Senha";
+    public static final String CHANGE_PASSWORD_PATH = "/password";
+    public static final String OFICIAL_DOC_SERVICE = "Diário Oficial";
+    public static final String OFICIAL_DOC_PATH = "/oficial-doc";
+    public static final String BILLS_SERVICE = "Impostos";
+    public static final String BILLS_PATH = "/bills";
+    public static final String SAC_SERVICE = "Contatos";
+    public static final String SAC_PATH = "/sac";
+
+    public static final String COVID_SERVICE = "Covid-19";
+    public static final String COVID_PATH = "https://www.gov.br/anvisa/pt-br/assuntos/servicosdesaude/seguranca-do-paciente/covid-19";
+    public static final String NEWS_SERVICE = "Notícicas";
+    public static final String NEWS_PATH = "/news";
 
     /**
      * Fields
@@ -49,6 +74,8 @@ public final class Constants {
     public static final String LAST_MODIFIED_DATE = "LAST_MODIFIED_DATE";
     public static final String NAME = "NAME";
     public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String PATH = "PATH";
+    public static final String IS_LOCAL_PATH = "IS_LOCAL_PATH";
     public static final String ROLES = "ROLES";
     public static final String IS_ONLY_READ = "IS_ONLY_READ";
     public static final String IS_RURAL_PRODUCER = "IS_RURAL_PRODUCER";

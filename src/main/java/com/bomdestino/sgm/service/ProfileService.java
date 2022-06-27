@@ -111,8 +111,6 @@ public class ProfileService {
 
     /**
      * Update the {@link Profile} *activated* status.
-     * <p>
-     * It will change the *blocked* status if the profile is activated.
      *
      * @param id it's the id of the profile to be updated.
      * @return the {@link Profile} that has been updated.

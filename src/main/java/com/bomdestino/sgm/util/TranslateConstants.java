@@ -49,6 +49,7 @@ public final class TranslateConstants {
      * System Profiles
      */
     public static final String SUPER_ADMIN_PROFILE = "Super Admin";
+    public static final String CITIZEN_PROFILE = "Habitante";
 
     /**
      * User keys
@@ -73,5 +74,19 @@ public final class TranslateConstants {
     public static final String PROFILE_FIELD_NAME_BLANK = "profile.name.blank";
     public static final String PROFILE_FIELD_NAME_SIZE = "profile.name.size";
     public static final String PROFILE_FIELD_DESCRIPTION_SIZE = "profile.description.size";
+
+    /**
+     * Area keys
+     */
+    public static final String AREA_ENTITY = "area";
+
+    /**
+     * SGMService keys
+     */
+    public static final String SGMSERVICE_ENTITY = "service";
+    public static final String SGMSERVICE_FIELD_NAME_BLANK = "service.name.blank";
+    public static final String SGMSERVICE_FIELD_NAME_SIZE = "service.name.size";
+    public static final String SGMSERVICE_FIELD_PATH_BLANK = "service.path.blank";
+    public static final String SGMSERVICE_FIELD_PATH_SIZE = "service.path.size";
 
 }

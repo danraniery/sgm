@@ -36,4 +36,14 @@ public final class EndpointConstants {
      */
     public static final String PROFILE_URL = BASE_URL + "/profiles";
 
+    /**
+     * Area
+     */
+    public static final String AREA_URL = BASE_URL + "/areas";
+
+    /**
+     * Service
+     */
+    public static final String SERVICE_URL = BASE_URL + "/services";
+
 }

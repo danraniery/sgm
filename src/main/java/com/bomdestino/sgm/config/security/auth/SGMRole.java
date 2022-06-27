@@ -19,7 +19,11 @@ public enum SGMRole {
 
     AUDITOR,
     PROFILE_MANAGEMENT,
-    USER_MANAGEMENT;
+    USER_MANAGEMENT,
+    SERVICE_MANAGEMENT,
+
+    VIEW_CITIZEN_SERVICES,
+    VIEW_HEALTH_SERVICES;
 
     public SimpleGrantedAuthority getGrantedAuthority() {
         return new SimpleGrantedAuthority("ROLE_" + this.name());

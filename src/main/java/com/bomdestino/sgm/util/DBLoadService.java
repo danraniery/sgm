@@ -1,10 +1,14 @@
 package com.bomdestino.sgm.util;
 
 import com.bomdestino.sgm.config.security.auth.SGMRole;
+import com.bomdestino.sgm.domain.Area;
 import com.bomdestino.sgm.domain.Profile;
+import com.bomdestino.sgm.domain.SGMService;
 import com.bomdestino.sgm.domain.User;
 import com.bomdestino.sgm.domain.enums.UserType;
+import com.bomdestino.sgm.repository.AreaRepository;
 import com.bomdestino.sgm.repository.ProfileRepository;
+import com.bomdestino.sgm.repository.SGMServiceRepository;
 import com.bomdestino.sgm.repository.UserRepository;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +18,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
-import static com.bomdestino.sgm.util.Constants.SYSTEM_ADMIN_FIRST_NAME;
-import static com.bomdestino.sgm.util.Constants.SYSTEM_ADMIN_USERNAME;
-import static com.bomdestino.sgm.util.TranslateConstants.DESCRIPTION_KEY;
-import static com.bomdestino.sgm.util.TranslateConstants.SUPER_ADMIN_PROFILE;
+import static com.bomdestino.sgm.util.Constants.*;
+import static com.bomdestino.sgm.util.TranslateConstants.*;
 
 /**
  * A service to create the initial data of the solution.
@@ -37,11 +36,15 @@ public class DBLoadService {
 
     private final Translator translator;
     private final UserRepository userRepository;
+    private final AreaRepository areaRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SGMServiceRepository serviceRepository;
     private final ProfileRepository profileRepository;
 
     private List<Profile> profiles;
     private List<User> users;
+    private List<Area> areas;
+    private List<SGMService> SGMServices;
 
     /**
      * Init all data of the solution.
@@ -50,6 +53,8 @@ public class DBLoadService {
         initLists();
         createProfiles();
         createUsers();
+        createAreas();
+        createServices();
     }
 
     /**
@@ -58,6 +63,8 @@ public class DBLoadService {
     public void initLists() {
         profiles = new ArrayList<>();
         users = new ArrayList<>();
+        areas = new ArrayList<>();
+        SGMServices = new ArrayList<>();
     }
 
     /**
@@ -73,12 +80,27 @@ public class DBLoadService {
                 .roles(Sets.newHashSet(
                         SGMRole.AUDITOR,
                         SGMRole.PROFILE_MANAGEMENT,
-                        SGMRole.USER_MANAGEMENT))
+                        SGMRole.USER_MANAGEMENT,
+                        SGMRole.SERVICE_MANAGEMENT,
+                        SGMRole.VIEW_CITIZEN_SERVICES,
+                        SGMRole.VIEW_HEALTH_SERVICES))
                 .onlyRead(true)
                 .activated(true)
                 .build();
 
         profiles.add(superAdminProfile);
+
+        Profile citizenProfile = Profile.builder()
+                .name(CITIZEN_PROFILE)
+                .description(translator.translate(CITIZEN_PROFILE.toLowerCase(Locale.ROOT).replace(" ", "") + DESCRIPTION_KEY))
+                .roles(Sets.newHashSet(
+                        SGMRole.VIEW_CITIZEN_SERVICES,
+                        SGMRole.VIEW_HEALTH_SERVICES))
+                .onlyRead(true)
+                .activated(true)
+                .build();
+
+        profiles.add(citizenProfile);
 
         return profiles;
 
@@ -116,6 +138,112 @@ public class DBLoadService {
     }
 
     /**
+     * Get the initial areas list.
+     *
+     * @return a list with all initial areas.
+     */
+    public List<Area> getAreasList() {
+
+        Area citizenArea = Area.builder()
+                .name(CITIZEN_AREA)
+                .activated(true)
+                .build();
+
+        areas.add(citizenArea);
+
+        Area healthArea = Area.builder()
+                .name(HEALTH_AREA)
+                .activated(true)
+                .build();
+
+        areas.add(healthArea);
+
+        return areas;
+
+    }
+
+    /**
+     * Get the initial services list.
+     *
+     * @return a list with all initial services.
+     */
+    public List<SGMService> getServicesList() {
+
+        Set<Area> citizenArea = new HashSet<>();
+        citizenArea.add(areaRepository.findByNameIgnoreCase(CITIZEN_AREA));
+
+        Set<Area> healthArea = new HashSet<>();
+        healthArea.add(areaRepository.findByNameIgnoreCase(HEALTH_AREA));
+
+        Set<Area> bothAreas = new HashSet<>();
+        bothAreas.add(areaRepository.findByNameIgnoreCase(CITIZEN_AREA));
+        bothAreas.add(areaRepository.findByNameIgnoreCase(HEALTH_AREA));
+
+        SGMService changePassword = SGMService.builder()
+                .name(CHANGE_PASSWORD_SERVICE)
+                .path(CHANGE_PASSWORD_PATH)
+                .areas(citizenArea)
+                .localPath(true)
+                .activated(true)
+                .build();
+
+        SGMServices.add(changePassword);
+
+        SGMService oficialDoc = SGMService.builder()
+                .name(OFICIAL_DOC_SERVICE)
+                .path(OFICIAL_DOC_PATH)
+                .areas(citizenArea)
+                .localPath(true)
+                .activated(false)
+                .build();
+
+        SGMServices.add(oficialDoc);
+
+        SGMService bills = SGMService.builder()
+                .name(BILLS_SERVICE)
+                .path(BILLS_PATH)
+                .areas(citizenArea)
+                .localPath(true)
+                .activated(false)
+                .build();
+
+        SGMServices.add(bills);
+
+        SGMService sac = SGMService.builder()
+                .name(SAC_SERVICE)
+                .path(SAC_PATH)
+                .areas(citizenArea)
+                .localPath(true)
+                .activated(false)
+                .build();
+
+        SGMServices.add(sac);
+
+        SGMService covid = SGMService.builder()
+                .name(COVID_SERVICE)
+                .path(COVID_PATH)
+                .areas(healthArea)
+                .localPath(false)
+                .activated(true)
+                .build();
+
+        SGMServices.add(covid);
+
+        SGMService news = SGMService.builder()
+                .name(NEWS_SERVICE)
+                .path(NEWS_PATH)
+                .areas(bothAreas)
+                .localPath(true)
+                .activated(false)
+                .build();
+
+        SGMServices.add(news);
+
+        return SGMServices;
+
+    }
+
+    /**
      * Create all initial profiles.
      */
     public void createProfiles() {
@@ -136,5 +264,28 @@ public class DBLoadService {
             }
         }
     }
+
+    /**
+     * Create all initial areas.
+     */
+    public void createAreas() {
+        for (Area area : getAreasList()) {
+            if (areaRepository.findByNameIgnoreCase(area.getName()) == null) {
+                areaRepository.save(area);
+            }
+        }
+    }
+
+    /**
+     * Create all initial services.
+     */
+    public void createServices() {
+        for (SGMService SGMService : getServicesList()) {
+            if (serviceRepository.findByNameIgnoreCase(SGMService.getName()) == null) {
+                serviceRepository.save(SGMService);
+            }
+        }
+    }
+
 
 }
