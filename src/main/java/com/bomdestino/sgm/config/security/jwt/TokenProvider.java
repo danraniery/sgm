@@ -150,7 +150,7 @@ public class TokenProvider implements InitializingBean {
         } catch (ExpiredJwtException exc) {
             exceptionHandler(response, new ExpiredCredentialsException(translator.translate(ACCOUNT_SESSION_EXPIRED)), HttpServletResponse.SC_FORBIDDEN);
             return false;
-        } catch (JwtException | IllegalArgumentException exc) {
+        } catch (JwtException | IllegalArgumentException | NotFoundException exc) {
             exceptionHandler(response, new BadCredentialsException(translator.translate(ACCESS_DENIED_MESSAGE)), HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
