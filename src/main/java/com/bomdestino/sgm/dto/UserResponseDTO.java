@@ -20,12 +20,15 @@ public class UserResponseDTO implements Serializable {
     private Long id;
     private String name;
     private String username;
+    private String type;
     private AbstractListDTO profile;
     private boolean activated;
+    private boolean ruralProducer;
 
     public UserResponseDTO(@Valid User user) {
         BeanUtils.copyProperties(user, this);
         this.profile = new AbstractListDTO(user.getProfile().getId(), user.getProfile().getName(), user.getProfile().isActivated());
+        this.type = user.getType().getType();
     }
 
 }
