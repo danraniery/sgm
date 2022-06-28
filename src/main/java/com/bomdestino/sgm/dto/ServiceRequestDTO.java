@@ -32,7 +32,7 @@ public class ServiceRequestDTO {
     private String path;
 
     @NotNull(message = USER_PROFILE_BLANK)
-    private List<Long> areas;
+    private List<AbstractListDTO> areas;
 
     @NotNull(message = USER_RURAL_PRODUCER_BLANK)
     private boolean localPath;

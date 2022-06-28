@@ -47,11 +47,11 @@ public class SGMServiceResource {
     }
 
     /**
-     * {@code GET  /profiles/activated/:id} : get all activated services from the system by area.
+     * {@code GET  /services/activated/:id} : get all activated services from the system by area.
      *
      * @param id       it's the id of the area that the services belongs.
      * @param pageable it's the page configuration.
-     * @return a page of {@link ServiceCardResponseDTO} with the profiles from the database.
+     * @return a page of {@link ServiceCardResponseDTO} with the services from the database.
      */
     @GetMapping(PARAMS_ACTIVATED + PARAMS_ID)
     @Secured({AUDITOR, VIEW_CITIZEN_SERVICES, VIEW_HEALTH_SERVICES})

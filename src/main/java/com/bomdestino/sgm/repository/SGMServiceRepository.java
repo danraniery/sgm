@@ -21,6 +21,6 @@ public interface SGMServiceRepository extends JpaRepository<SGMService, Long> {
 
     Page<SGMService> findAllByNameContainingIgnoreCase(String name, Pageable pageable);
 
-    Page<SGMService> findAllByAreasWithinAndActivatedIsTrue(Area area, Pageable pageable);
+    Page<SGMService> findAllByAreasContainingAndActivatedIsTrue(Area area, Pageable pageable);
 
 }

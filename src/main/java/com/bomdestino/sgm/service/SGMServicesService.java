@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -81,7 +82,7 @@ public class SGMServicesService {
      */
     public Page<ServiceCardResponseDTO> getAllActivatedServices(Long areaId, Pageable pageable) {
         Area area = areaService.getAreaById(areaId);
-        return sgmServiceRepository.findAllByAreasWithinAndActivatedIsTrue(area, pageable)
+        return sgmServiceRepository.findAllByAreasContainingAndActivatedIsTrue(area, pageable)
                 .map(ServiceCardResponseDTO::new);
     }
 
@@ -94,6 +95,10 @@ public class SGMServicesService {
     public SGMService createSGMService(ServiceRequestDTO dto) {
         SGMService service = new SGMService();
         BeanUtils.copyProperties(dto, service);
+        dto.getAreas().forEach((area) -> {
+            service.getAreas().add(areaService.getAreaById(area.getId()));
+        });
+
         verifyServiceNameConflict(dto.getName(), dto.getId());
         return sgmServiceRepository.save(service);
     }
@@ -109,6 +114,10 @@ public class SGMServicesService {
         SGMService service = getServiceById(id);
         verifyServiceNameConflict(dto.getName(), dto.getId());
         BeanUtils.copyProperties(dto, service);
+        service.setAreas(new HashSet<>());
+        dto.getAreas().forEach((area) -> {
+            service.getAreas().add(areaService.getAreaById(area.getId()));
+        });
         return sgmServiceRepository.save(service);
     }
 
